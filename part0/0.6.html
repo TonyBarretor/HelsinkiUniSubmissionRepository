@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre class="mermaid">
+        sequenceDiagram
+    participant Browser
+    participant Server
+
+    Note left of Server: This request contains the new note as JSON data<br/>containing both, note content and date.
+    Note left of Server: We are sending a JSON data type,<br/>instead of an HTML used on the traditional way
+    Browser->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa<br/>[{ "content": "SinglePageApplicationVersion", "date": "2025-1-1" }, ... ]
+    activate Server
+    Server-->>Browser: HTTP 201 created
+    deactivate Server
+    Note  right of Browser: The Server does not ask for a redirect,<br/>because of the JS handling the form submitting.<br/>Therefore the browser stays in the same page
+
+          </pre>
+          <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+          </script>
+</body>
+</html>
