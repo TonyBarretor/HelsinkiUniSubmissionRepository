@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre class="mermaid">
+        sequenceDiagram
+    participant Browser
+    participant Server
+
+    Note right of Browser: The Browser performs a HTTP POST request.<br/>The Form tag defines the submitting form as an HTTP Post<br/>through its attributes action and methods<br/>that request to the address /new_note
+    
+    Browser-->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate Server
+
+    Server-->>Browser: HTTP status code 302 (URL redirect)
+    deactivate Server
+    Note left of Server: The Server asks the Browser<br/> to perfom a new HTTP GET
+
+    Note right of Browser: It is perfomed a new HTTP GET<br/>because of the Server request.<br> The HTML document is located in /notes
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate Server
+
+    Server-->>Browser: HTML document
+    deactivate Server
+    Note left of Server: The server provides the HTML document
+    Note  right of Browser: Browser reads the HTML code.<br/>There is a link tag that cause the browser<br/>request the style sheet main.css
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate Server
+    
+    Server-->>Browser: the css file
+    deactivate Server
+    Note left of Server: The server provides the CSS file
+    Note right of Browser: The same way the Browser got the CSS file,<br/>there is script tag that causes the Browser<br/>requests the main.js file
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate Server
+
+    Server-->>Browser: the JavaScript file
+    deactivate Server
+    Note left of Server: The server provides the JavaScript file
+    Note right of Browser: The browser starts executing the JavaScript code<br/>that fetches the JSON from the server
+    
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate Server
+    Server-->>Browser: [{ "content": "newNoteToExplainHowWorksTheNewNoteUpload", "date": "2025-1-1" }, ... ]
+    deactivate Server
+    Note right of Browser: The browser executes<br/> callback function(also called as Event Handler)<br/>that renders the notes.<br/>This data.json has at the end the posted new note
+          </pre>
+          <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+          </script>
+</body>
+</html>
