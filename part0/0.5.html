@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre class="mermaid">
+        sequenceDiagram
+    participant Browser
+    participant Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate Server
+    Server-->>Browser: HTML document
+    deactivate Server
+    Note right of Browser: The form-tag does not have action and method<br/>like the traditional web app
+
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate Server
+    Server-->>Browser: the css file
+    deactivate Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate Server
+    Server-->>Browser: the JavaScript file
+    deactivate Server
+
+    Note right of Browser: The Browser starts executing the JavaScript code<br/>that fetches the JSON from the server
+    Note right of Browser: The SPA version uses JS to manage the form submit<br/> instead of using the traditional way
+    Note right of Browser: This avoid the server asks for a redirect,<br/>therefore the browser stays on the same page
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate Server
+    Server-->>Browser: [{ "content": "SinglePageApplicationVersion", "date": "2025-1-1" }, ... ]
+    deactivate Server
+
+    Note right of Browser: The Browser executes the callBack function that renders the notes
+          </pre>
+          <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+          </script>
+</body>
+</html>
